@@ -3,19 +3,27 @@ package com.devsuperior.hrpayroll.entities;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class Payment implements Serializable {
-	private static final long serialVersionUID = -977313060139982292L;
+public class Worker implements Serializable{
+	private static final long serialVersionUID = 4394336570452773971L;
 	
+	private Long id;
 	private String name;
 	private BigDecimal dailyIncome;
-	private Integer days;
 	
-	public Payment() {}
+	public Worker() {}
 
-	public Payment(String name, BigDecimal dailyIncome, Integer days) {
+	public Worker(Long id, String name, BigDecimal dailyIncome) {
+		this.id = id;
 		this.name = name;
 		this.dailyIncome = dailyIncome;
-		this.days = days;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -32,17 +40,5 @@ public class Payment implements Serializable {
 
 	public void setDailyIncome(BigDecimal dailyIncome) {
 		this.dailyIncome = dailyIncome;
-	}
-
-	public Integer getDays() {
-		return days;
-	}
-
-	public void setDays(Integer days) {
-		this.days = days;
-	}
-
-	public BigDecimal getTotal() {
-		return dailyIncome.multiply(BigDecimal.valueOf(days));
 	}
 }
