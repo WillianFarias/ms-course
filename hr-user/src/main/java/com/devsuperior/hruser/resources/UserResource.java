@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.devsuperior.hruser.entity.User;
@@ -22,6 +23,12 @@ public class UserResource {
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<User> findById(@PathVariable Long id) {
 		Optional<User> user = userRepository.findById(id);
+		return user.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+	}
+	
+	@GetMapping(value = "/search")
+	public ResponseEntity<User> findByEmail(@RequestParam String email) {
+		Optional<User> user = userRepository.findByEmail(email);
 		return user.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
 	}
 }
