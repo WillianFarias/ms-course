@@ -1,12 +1,18 @@
 package com.devsuperior.hruser.entity;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -20,6 +26,12 @@ public class Role implements Serializable {
 	private Long id;
 	
 	private String roleName;
+	
+	@ManyToMany(mappedBy = "roles")
+	private Set<User> users = new HashSet<>();
+	
+	@OneToMany(mappedBy = "role", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+	private Set<Functionality> functionalities = new HashSet<>();
 
 	public Role() {
 	}
@@ -43,6 +55,14 @@ public class Role implements Serializable {
 
 	public void setRoleName(String roleName) {
 		this.roleName = roleName;
+	}
+	
+	public Set<Functionality> getFunctionalities() {
+		return functionalities;
+	}
+
+	public void setFunctionalities(Set<Functionality> functionalities) {
+		this.functionalities = functionalities;
 	}
 
 	@Override

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.devsuperior.hruser.dto.UserDTO;
 import com.devsuperior.hruser.entity.User;
 import com.devsuperior.hruser.repositories.UserRepository;
 
@@ -21,9 +22,11 @@ public class UserResource {
 	private UserRepository userRepository;
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<User> findById(@PathVariable Long id) {
+	public ResponseEntity<UserDTO> findById(@PathVariable Long id) {
 		Optional<User> user = userRepository.findById(id);
-		return user.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+		UserDTO userDTO = new UserDTO(user.get());
+		return ResponseEntity.ok(userDTO);
+//		return user.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
 	}
 	
 	@GetMapping(value = "/search")

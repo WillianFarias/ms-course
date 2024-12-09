@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -37,6 +38,10 @@ public class User implements Serializable {
 	
 	private String name;
 	private String password;
+	
+	@ManyToOne
+	@JoinColumn(name = "level_adm_id")
+	private LevelAdm levelAdm;
 
 	public User() {
 	}
@@ -82,6 +87,14 @@ public class User implements Serializable {
 
 	public Set<Role> getRoles() {
 		return roles;
+	}
+
+	public LevelAdm getLevelAdm() {
+		return levelAdm;
+	}
+
+	public void setLevelAdm(LevelAdm levelAdm) {
+		this.levelAdm = levelAdm;
 	}
 
 	@Override
