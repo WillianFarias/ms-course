@@ -1,7 +1,7 @@
 package com.devsuperior.hrworker.resources;
 
-import java.util.List;
-
+import com.devsuperior.hrworker.entities.Worker;
+import com.devsuperior.hrworker.repositories.WorkerRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.devsuperior.hrworker.entities.Worker;
-import com.devsuperior.hrworker.repositories.WorkerRepository;
+import java.util.List;
 
 @RefreshScope
 @RestController
@@ -49,7 +48,7 @@ public class WorkerResources {
 	public ResponseEntity<Worker> findById(@PathVariable Long id) {
 		logger.info("PORT: " + environment.getProperty("local.server.port"));
 		
-		Worker worker = workerRepository.findById(id).get();
+		Worker worker = workerRepository.findById(id).orElseThrow(RuntimeException::new);
 		return ResponseEntity.ok(worker);
 	}
 }
